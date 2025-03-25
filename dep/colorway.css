@@ -1,0 +1,63 @@
+:root {
+  /*
+Place all default color settings here
+*/
+  --body-color: rgb(240, 240, 240);
+
+  --nav-bg: rgb(173, 173, 173);
+
+  --theme-btn-bg: rgb(66, 66, 66);
+  --theme-btn-hov-bg: rgb(66, 66, 66);
+  --theme-btn-bg-shadow: rgb(233, 233, 233);
+
+  --wtc-bg: rgb(240, 240, 240);
+  --wtc-scroll-bg: linear-gradient(45deg, #616161, #616161);
+  --wtc-scroll-track: rgba(0, 0, 0, 0.3);
+  --tz-card: rgb(255, 255, 255);
+  --day-det-box: rgb(177, 177, 177);
+  --clock-color: #292929;
+  --dotw-color: #292929;
+  --month-color: #292929;
+  --date-color: #292929;
+  --region-color: #292929;
+
+  --form-bg: rgb(201, 201, 201);
+
+  --inputbordercolor: rgb(161, 161, 161);
+  --inputbg: rgb(255, 255, 255);
+  --inputcolor: rgb(83, 83, 83);
+
+  --labelcolor: rgb(68, 68, 68);
+}
+
+.darkMode {
+  /*
+  Place all default color settings here
+  */
+  --body-color: rgb(44, 44, 44);
+
+  --nav-bg: rgb(117, 117, 117);
+
+  --theme-btn-bg: rgb(224, 224, 224);
+  --theme-btn-hov-bg: rgb(255, 255, 255);
+  --theme-btn-bg-shadow: rgb(185, 185, 185);
+
+  --wtc-bg: rgb(168, 168, 168);
+  --wtc-scroll-bg: linear-gradient(45deg, #616161, #616161);
+  --wtc-scroll-track: rgba(211, 211, 211, 0.3);
+  --tz-card: rgb(71, 71, 71);
+  --day-det-box: rgb(8, 8, 8);
+  --clock-color: #dddbdb;
+  --dotw-color: #dddbdb;
+  --month-color: #dddbdb;
+  --date-color: #dddbdb;
+  --region-color: #dddbdb;
+
+  --form-bg: rgb(201, 201, 201);
+
+  --inputbordercolor: rgb(161, 161, 161);
+  --inputbg: rgb(255, 255, 255);
+  --inputcolor: rgb(83, 83, 83);
+
+  --labelcolor: rgb(68, 68, 68);
+}
