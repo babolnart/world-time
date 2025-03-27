@@ -12,13 +12,15 @@ const WorldTimeContainer = () => {
 
   const updateTimes = () => {
     const now = new Date();
+    const utcNow = now.getTime() + now.getTimezoneOffset() * 60000; // Convert local time to UTC
+  
     return selectedRegions.map((region) => {
       const index = regions.indexOf(region);
       if (index === -1) return null; // Prevent errors for missing regions
-
+  
       const offsetHours = parseInt(offset[index], 10);
-      const timeZoneTime = new Date(now.getTime() + offsetHours * 3600 * 1000);
-
+      const timeZoneTime = new Date(utcNow + offsetHours * 3600 * 1000); // Apply offset to UTC time
+  
       return {
         name: region.toUpperCase(),
         time: {
@@ -31,6 +33,7 @@ const WorldTimeContainer = () => {
       };
     }).filter(Boolean); // Remove any null values
   };
+  
 
   const [times, setTimes] = useState(updateTimes);
 
