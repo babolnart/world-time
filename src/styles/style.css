@@ -133,15 +133,18 @@ header {
     margin-bottom: 10px;
 }
 
-/* Align dropdown and button side by side */
+/* Align dropdown and button side by side in a row */
 .region-selector {
     display: flex;
     align-items: center;
+    justify-content: flex-start; /* Align items horizontally */
     gap: 10px;
-    margin-top: 15px;
+    width: 100%;
+    max-width: 600px; /* Limit width of the form */
 }
 
-/* Dropdown Styling */
+/* Input field and dropdown with consistent width */
+.search-bar,
 .select-dropdown {
     background-color: black;
     color: white;
@@ -153,16 +156,17 @@ header {
     outline: none;
     cursor: pointer;
     transition: border-color 0.3s ease-in-out, background 0.3s ease-in-out;
-    flex-grow: 1; /* Allows dropdown to fill available space */
+    flex-grow: 1;
+    width: 200px; /* Set a fixed width that can accommodate the longest city name */
+    min-width: 200px; /* Prevent the dropdown from becoming too narrow */
+    max-width: 200px; /* Prevent the dropdown from expanding beyond this width */
+    position: relative; /* Ensure the clear button stays inside */
 }
 
-.select-dropdown:hover {
-    border-color: white;
-}
-
-.select-dropdown option {
-    background-color: black;
-    color: white;
+/* Button Group */
+.button-group {
+    display: flex;
+    gap: 10px;
 }
 
 /* Improved Add Button */
@@ -182,7 +186,76 @@ header {
     transition: background 0.3s ease-in-out, transform 0.2s;
 }
 
+/* Reset Button */
+.reset-btn {
+    background: linear-gradient(135deg, #b16060, #d18b8b);
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out, transform 0.2s;
+}
+
+/* Hover effects for buttons */
 .add-btn:hover {
     background: linear-gradient(135deg, #444, #666);
     transform: scale(1.1);
+}
+
+.reset-btn:hover {
+    background: linear-gradient(135deg, #9e6b6b, #c7a2a2);
+    transform: scale(1.05);
+}
+
+/* Select Dropdown Styling */
+.select-dropdown:hover {
+    border-color: white;
+}
+
+.select-dropdown option {
+    background-color: black;
+    color: white;
+}
+
+/* Clear Button (X) Inside the Input Field */
+.input-group {
+    position: relative; /* Position context for the X button */
+    width: 100%;
+}
+
+/* X button styling inside the input field */
+.clear-btn {
+    position: absolute;
+    right: 10px; /* Position the X to the right */
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #b16060; /* Grayish color */
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px; /* Chamfered square */
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out, transform 0.2s;
+    z-index: 1; /* Ensure the X is above the input field */
+}
+
+/* Hover effect for the X button */
+.clear-btn:hover {
+    background-color: #d18b8b; /* Lighter gray color */
+    transform: scale(1.1); /* Slight scale on hover */
+}
+
+/* Adjust the padding-right of the search-bar to make space for the clear button */
+.search-bar {
+    padding-right: 30px; /* Space for the X button */
+    width: 100%; /* Make sure the input takes the full width */
 }

@@ -1,27 +1,64 @@
 /************************************
 **********TIMEZONE SETTINGS**********
 
-objQty - number of timezone cards
-offset - an array of timezone offsets per timezone card region
-region - string name of the region (this does not auto adjust the name)
-isDST - is a (1)true or (0)false statement to say whether the particular region is in daylight saving time
-
-NOTE: US Daylight Saving Time starts at 2:00AM (1:59AM >>> 3:00AM) on the 2nd Sunday of March and ends at 2:00AM (1:59AM to 1:00AM) on the 1st Sunday of November
-FOR FUTURE USE
+This file contains all possible cities, their respective time offsets, and daylight saving time (DST) information.
 ************************************/
-export const objQty = 10;
-export const offset = ["+8", "-8", "-7", "-6", "-5", "0", "+1", "+2", "+3", "+9"];
-export const isDST = ["0", "1", "1", "1", "1", "0", "0", "0", "0", "0"];
-export const regions = [
-  "local",
-  "pacific",
-  "mountain",
-  "central",
-  "eastern",
-  "london",
-  "paris",
-  "kyiv",
-  "moscow",
-  "tokyo, seoul",
+
+export const cities = [
+  { name: "New York", offset: "-5", isDST: true },
+  { name: "Los Angeles", offset: "-8", isDST: true },
+  { name: "Chicago", offset: "-6", isDST: true },
+  { name: "Houston", offset: "-6", isDST: true },
+  { name: "Phoenix", offset: "-7", isDST: false },
+  { name: "London", offset: "0", isDST: true },
+  { name: "Paris", offset: "+1", isDST: true },
+  { name: "Berlin", offset: "+1", isDST: true },
+  { name: "Kyiv", offset: "+2", isDST: true },
+  { name: "Moscow", offset: "+3", isDST: false },
+  { name: "Tokyo", offset: "+9", isDST: false },
+  { name: "Seoul", offset: "+9", isDST: false },
+  { name: "Sydney", offset: "+11", isDST: true },
+  { name: "Dubai", offset: "+4", isDST: false },
+  { name: "Singapore", offset: "+8", isDST: false },
+  { name: "Mumbai", offset: "+5.5", isDST: false },
+  { name: "Cape Town", offset: "+2", isDST: false },
+  { name: "Rio de Janeiro", offset: "-3", isDST: true },
+  { name: "Buenos Aires", offset: "-3", isDST: false },
+  { name: "Mexico City", offset: "-6", isDST: true },
+  { name: "Toronto", offset: "-5", isDST: true },
+  { name: "San Francisco", offset: "-8", isDST: true },
+  { name: "Madrid", offset: "+1", isDST: true },
+  { name: "Rome", offset: "+1", isDST: true },
+  { name: "Cairo", offset: "+2", isDST: false },
+  { name: "Istanbul", offset: "+3", isDST: true },
+  { name: "Jakarta", offset: "+7", isDST: false },
+  { name: "Bangkok", offset: "+7", isDST: false },
+  { name: "Hong Kong", offset: "+8", isDST: false },
+  { name: "Kuala Lumpur", offset: "+8", isDST: false },
+  { name: "Lagos", offset: "+1", isDST: false },
+  { name: "Nairobi", offset: "+3", isDST: false },
+  { name: "Manila", offset: "+8", isDST: false },
+  { name: "Athens", offset: "+2", isDST: true },
+  { name: "Lima", offset: "-5", isDST: false },
+  { name: "Santiago", offset: "-4", isDST: true },
+  { name: "Caracas", offset: "-4.5", isDST: false },
+  { name: "Bogotá", offset: "-5", isDST: false },
+  { name: "Tehran", offset: "+3.5", isDST: true },
+  { name: "Colombo", offset: "+5.5", isDST: false },
+  { name: "Chennai", offset: "+5.5", isDST: false },
+  { name: "Dhaka", offset: "+6", isDST: false },
+  { name: "Chongqing", offset: "+8", isDST: false },
+  { name: "Karachi", offset: "+5", isDST: false },
+  { name: "Auckland", offset: "+13", isDST: true },
+  { name: "Wellington", offset: "+13", isDST: true },
+  { name: "Brisbane", offset: "+10", isDST: false },
+  { name: "Melbourne", offset: "+11", isDST: true },
+  { name: "Adelaide", offset: "+10.5", isDST: true },
+  { name: "Perth", offset: "+8", isDST: false },
+  { name: "Vancouver", offset: "-8", isDST: true },
+  { name: "Montreal", offset: "-5", isDST: true },
+  { name: "Calcutta", offset: "+5.5", isDST: false },
+  { name: "Osaka", offset: "+9", isDST: false },
 ];
 
+export const objQty = cities.length;
