@@ -7,48 +7,82 @@
     box-sizing: border-box;
 }
 
+/* Theme Variables */
+body.earth-theme {
+    --bg-color: #3b2f2f;
+    --card-bg: #5c4b51;
+    --text-color: #f4e9cd;
+    --header-bg: #2c1d1d;
+    --border-color: #a07850;
+    --button-bg: #8b5e3c;
+    --button-hover-bg: #a07850;
+}
+
+body.dark-theme {
+    --bg-color: #1e1e1e;
+    --card-bg: #333;
+    --text-color: #ffffff;
+    --header-bg: #000000;
+    --border-color: #444;
+    --button-bg: #333;
+    --button-hover-bg: #555;
+}
+
+body.sunny-theme {
+    --bg-color: #fffcf2;
+    --card-bg: #ffd166;
+    --text-color: #403d39;
+    --header-bg: #ff9f1c;
+    --border-color: #ff9f1c;
+    --button-bg: #ff9f1c;
+    --button-hover-bg: #ff7f00;
+}
+
+/* Apply theme colors */
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: "Montserrat", sans-serif;
+}
+
 /* Header Styling */
 header {
     width: 100%;
     height: 60px;
-    background-color: gray;
+    background-color: var(--header-bg);
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
     font-size: 20px;
     font-weight: bold;
-    font-family: "Montserrat", sans-serif;
 }
 
 /* World Time Container */
 #world-time-container {
     width: 100%;
-    background-color: lightgray;
     padding: 20px;
-    font-family: "Montserrat", sans-serif;
     display: flex;
-    flex-direction: column; /* Stacks timezones and selector */
+    flex-direction: column;
     align-items: center;
     gap: 20px;
 }
 
-/* Ensure timezones container allows cards to be laid out horizontally */
+/* Timezones layout */
 .timezones {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 15px;
     width: 100%;
-    margin: 0 auto;
 }
 
-/* Individual Clock Card */
+/* Clock Card */
 .timezone-card {
     position: relative;
     width: 180px;
     height: 260px;
-    background: black;
+    background: var(--card-bg);
     border-radius: 10px;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
     display: flex;
@@ -59,33 +93,10 @@ header {
     text-align: center;
     cursor: pointer;
     transition: transform 0.3s ease-in-out;
-    color: white;
+    color: var(--text-color);
 }
 
-/* Close (X) Button */
-.close-btn {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    font-size: 16px;
-    font-weight: bold;
-    color: gray;
-    background: none;
-    border: none;
-    cursor: pointer;
-    transition: color 0.3s ease-in-out, background 0.3s ease-in-out;
-    padding: 5px;
-    border-radius: 4px;
-}
-
-/* Hover effect: Turns into a red chamfered square with white X */
-.close-btn:hover {
-    color: white;
-    background: #b16060;
-    padding: 5px 8px;
-    border-radius: 4px;
-}
-
+/* Hover Effect */
 .timezone-card:hover {
     transform: scale(1.05);
 }
@@ -102,160 +113,195 @@ header {
 .timezone-time {
     font-size: 50px;
     font-weight: bold;
-    color: white;
     width: 100%;
     text-align: center;
 }
 
-/* Blinking Colon Animation */
+/* Blinking Colon */
 @keyframes blink {
     50% {
         opacity: 0;
     }
 }
-
-/* Apply blinking effect to the colon */
 .blinking-colon {
     animation: blink 1s infinite;
-}
-
-/* Day of the Week */
-.timezone-day {
-    font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 5px;
 }
 
 /* Date */
 .timezone-date {
     font-size: 14px;
-    color: white;
     margin-bottom: 10px;
 }
 
-/* Align dropdown and button side by side in a row */
-.region-selector {
+/* Theme Toggle (Burger Menu) */
+.theme-toggle {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+}
+
+.burger-menu {
+    background: none;
+    border: none;
+    font-size: 30px;
+    cursor: pointer;
+    color: var(--text-color);
+}
+
+/* Close (X) Button */
+.close-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--text-color);
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s ease-in-out, background 0.3s ease-in-out;
+    padding: 5px;
+    border-radius: 4px;
+}
+
+body.earth-theme .close-btn:hover {
+    color: #f4e9cd;
+    background: #8b5e3c;
+}
+
+body.dark-theme .close-btn:hover {
+    color: white;
+    background: #444;
+}
+
+body.sunny-theme .close-btn:hover {
+    color: #fffcf2;
+    background: #ff9f1c;
+}
+
+/* Control Group */
+.control-group {
     display: flex;
     align-items: center;
-    justify-content: flex-start; /* Align items horizontally */
-    gap: 10px;
-    width: 100%;
-    max-width: 600px; /* Limit width of the form */
+    gap: 5px; /* Keep the 5px gap */
+    flex-wrap: nowrap;
+    position: relative; /* Ensures the clear button stays inside */
 }
 
-/* Input field and dropdown with consistent width */
-.search-bar,
-.select-dropdown {
-    background-color: black;
-    color: white;
-    border: 2px solid gray;
-    border-radius: 5px;
-    padding: 8px 12px;
+/* Search Bar */
+.search-bar {
+    width: 250px;
+    padding: 10px;
     font-size: 16px;
     font-weight: 500;
+    border: 2px solid var(--border-color);
+    border-radius: 5px;
     outline: none;
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    position: relative;
+}
+
+/* Custom Dropdown List */
+.dropdown-list {
+    position: absolute;
+    width: 250px;
+    background: var(--card-bg);
+    border: 2px solid var(--border-color);
+    border-radius: 5px;
+    margin-top: 5px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 10;
+    list-style: none;
+    padding: 5px 0;
+}
+
+/* Dropdown Items */
+.dropdown-item {
+    padding: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-color);
     cursor: pointer;
-    transition: border-color 0.3s ease-in-out, background 0.3s ease-in-out;
-    flex-grow: 1;
-    width: 200px; /* Set a fixed width that can accommodate the longest city name */
-    min-width: 200px; /* Prevent the dropdown from becoming too narrow */
-    max-width: 200px; /* Prevent the dropdown from expanding beyond this width */
-    position: relative; /* Ensure the clear button stays inside */
+    transition: background 0.2s;
 }
 
-/* Button Group */
-.button-group {
-    display: flex;
-    gap: 10px;
+/* Dropdown Item Hover */
+body.earth-theme .dropdown-item:hover {
+    background: #8b5e3c;
 }
 
-/* Improved Add Button */
-.add-btn {
-    background: linear-gradient(135deg, #222, #444);
+body.dark-theme .dropdown-item:hover {
+    background: #444;
+}
+
+body.sunny-theme .dropdown-item:hover {
+    background: #ff9f1c;
+}
+
+/* Hide default select dropdown */
+.select-dropdown {
+    display: none;
+}
+
+/* Clear (X) Button */
+.clear-btn {
+    position: absolute;
+    right: 250px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.3);
     color: white;
-    font-size: 24px;
+    font-size: 14px;
     font-weight: bold;
     border: none;
-    border-radius: 5px;
-    width: 40px;
-    height: 40px;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     transition: background 0.3s ease-in-out, transform 0.2s;
+    z-index: 3;
+    visibility: hidden;
+    opacity: 0;
 }
 
-/* Reset Button */
+.search-bar:not(:placeholder-shown) + .clear-btn,
+.search-bar:focus + .clear-btn {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Buttons */
+.add-btn,
 .reset-btn {
-    background: linear-gradient(135deg, #b16060, #d18b8b);
-    color: white;
+    background: var(--button-bg);
+    color: var(--text-color);
     font-size: 16px;
-    font-weight: 500;
-    padding: 10px 20px;
+    font-weight: bold;
+    padding: 10px 15px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: background 0.3s ease-in-out, transform 0.2s;
+    display: inline-block;
+    min-width: 120px;
+    text-transform: uppercase; /* Ensures button text is always uppercase */
 }
 
-/* Hover effects for buttons */
-.add-btn:hover {
-    background: linear-gradient(135deg, #444, #666);
-    transform: scale(1.1);
-}
-
+/* Hover effects */
+.add-btn:hover,
 .reset-btn:hover {
-    background: linear-gradient(135deg, #9e6b6b, #c7a2a2);
+    background: var(--button-hover-bg);
     transform: scale(1.05);
 }
 
-/* Select Dropdown Styling */
-.select-dropdown:hover {
-    border-color: white;
-}
-
-.select-dropdown option {
-    background-color: black;
-    color: white;
-}
-
-/* Clear Button (X) Inside the Input Field */
-.input-group {
-    position: relative; /* Position context for the X button */
-    width: 100%;
-}
-
-/* X button styling inside the input field */
-.clear-btn {
-    position: absolute;
-    right: 10px; /* Position the X to the right */
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: #b16060; /* Grayish color */
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-    border: none;
-    border-radius: 5px; /* Chamfered square */
-    width: 20px;
-    height: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: background 0.3s ease-in-out, transform 0.2s;
-    z-index: 1; /* Ensure the X is above the input field */
-}
-
-/* Hover effect for the X button */
-.clear-btn:hover {
-    background-color: #d18b8b; /* Lighter gray color */
-    transform: scale(1.1); /* Slight scale on hover */
-}
-
-/* Adjust the padding-right of the search-bar to make space for the clear button */
-.search-bar {
-    padding-right: 30px; /* Space for the X button */
-    width: 100%; /* Make sure the input takes the full width */
+/* Show the clear button when input has text */
+.search-bar:not(:placeholder-shown) + .clear-btn,
+.search-bar:focus + .clear-btn {
+    visibility: visible;
+    opacity: 1;
 }
