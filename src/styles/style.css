@@ -248,7 +248,7 @@ body.sunny-theme .dropdown-item:hover {
 /* Clear (X) Button */
 .clear-btn {
     position: absolute;
-    right: 250px;
+    right: 45px;
     top: 50%;
     transform: translateY(-50%);
     background-color: rgba(0, 0, 0, 0.3);
@@ -275,33 +275,32 @@ body.sunny-theme .dropdown-item:hover {
     opacity: 1;
 }
 
-/* Buttons */
-.add-btn,
-.reset-btn {
-    background: var(--button-bg);
-    color: var(--text-color);
-    font-size: 16px;
-    font-weight: bold;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s ease-in-out, transform 0.2s;
-    display: inline-block;
-    min-width: 120px;
-    text-transform: uppercase; /* Ensures button text is always uppercase */
-}
-
-/* Hover effects */
-.add-btn:hover,
-.reset-btn:hover {
-    background: var(--button-hover-bg);
-    transform: scale(1.05);
-}
-
 /* Show the clear button when input has text */
 .search-bar:not(:placeholder-shown) + .clear-btn,
 .search-bar:focus + .clear-btn {
     visibility: visible;
     opacity: 1;
 }
+
+.reset-btn {
+    background: none; /* Remove background */
+    color: var(--text-color); /* Ensure it matches the theme */
+    font-size: 24px; /* Adjust size for better visibility */
+    font-weight: bold;
+    padding: 5px; /* Reduce padding */
+    border: none; /* Remove border */
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.reset-btn:hover {
+    transform: scale(1.2);
+    opacity: 0.8;
+}
+
+.dropdown-item.highlighted {
+    background-color: #e0e0e0; /* or any color you prefer for the highlight */
+  }

@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from "react";
-import moment from "moment-timezone"; // This gives you access to both Moment and Moment-Timezone
-import "moment-timezone/data/packed/latest.json"; // This loads the timezone data
-import { cities } from "../dep/settings.js"; // Import cities from the updated settings
+import moment from "moment-timezone";
+import "moment-timezone/data/packed/latest.json";
+import { cities } from "../dep/settings.js";
 
 const WorldTimeContainer = () => {
   const [selectedRegions, setSelectedRegions] = useState(() => {
     const savedRegions = JSON.parse(localStorage.getItem("selectedRegions"));
-    return savedRegions && savedRegions.length > 0 ? savedRegions : []; // No default cities here
+    return savedRegions && savedRegions.length > 0 ? savedRegions : [];
   });
 
-  const [selectedCity, setSelectedCity] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [dropdownVisible, setDropdownVisible] = useState(false);
+  const [highlightedIndex, setHighlightedIndex] = useState(-1);
 
   const filteredCities = cities.filter(
     (city) =>
-      city.name.toLowerCase().startsWith(searchTerm.toLowerCase()) && // Predictive filtering
-      !selectedRegions.includes(city.name) // Ensure not already selected
+      city.name.toLowerCase().startsWith(searchTerm.toLowerCase()) &&
+      !selectedRegions.includes(city.name)
   );
 
   const updateTimes = () => {
@@ -53,16 +53,70 @@ const WorldTimeContainer = () => {
   }, [selectedRegions]);
 
   const addRegion = () => {
+    const selectedCity = localStorage.getItem("highlightedCity");
     if (selectedCity && !selectedRegions.includes(selectedCity)) {
       setSelectedRegions((prev) => {
         const updated = [...prev, selectedCity];
         localStorage.setItem("selectedRegions", JSON.stringify(updated));
         return updated;
       });
-      setSelectedCity("");
+      localStorage.removeItem("highlightedCity"); // Clear the selected city after adding
       setSearchTerm("");
-      setDropdownVisible(false); // Hide dropdown after selection
+      setDropdownVisible(false);
     }
+  };
+
+  const handleSearchChange = (e) => {
+    const searchTerm = e.target.value;
+    setSearchTerm(searchTerm);
+
+    setDropdownVisible(searchTerm.length > 0);
+
+    const matchingCity = filteredCities.find(
+      (city) => city.name.toLowerCase() === searchTerm.toLowerCase()
+    );
+
+    if (matchingCity) {
+      localStorage.setItem("highlightedCity", matchingCity.name);
+      setSearchTerm("");
+      setDropdownVisible(false);
+      addRegion();
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "ArrowDown") {
+      setHighlightedIndex((prevIndex) =>
+        prevIndex < filteredCities.length - 1 ? prevIndex + 1 : prevIndex
+      );
+      localStorage.setItem(
+        "highlightedCity",
+        filteredCities[highlightedIndex + 1]?.name
+      );
+    } else if (e.key === "ArrowUp") {
+      setHighlightedIndex((prevIndex) =>
+        prevIndex > 0 ? prevIndex - 1 : prevIndex
+      );
+      localStorage.setItem(
+        "highlightedCity",
+        filteredCities[highlightedIndex - 1]?.name
+      );
+    } else if (e.key === "Enter" && highlightedIndex >= 0) {
+      const selected = filteredCities[highlightedIndex];
+      if (selected) {
+        setSearchTerm("");
+        setHighlightedIndex(-1);
+        localStorage.setItem("highlightedCity", selected.name);
+        addRegion();
+        setDropdownVisible(false);
+      }
+    }
+  };
+
+  const resetLocalStorage = () => {
+    localStorage.removeItem("selectedRegions");
+    localStorage.removeItem("highlightedCity"); // Clear highlightedCity as well
+    setSelectedRegions([]);
   };
 
   const removeRegion = (region) => {
@@ -73,41 +127,7 @@ const WorldTimeContainer = () => {
       localStorage.setItem("selectedRegions", JSON.stringify(updated));
       return updated;
     });
-  };
-
-  const resetLocalStorage = () => {
-    localStorage.removeItem("selectedRegions");
-    setSelectedRegions([]);
-  };
-
-  const handleSearchChange = (e) => {
-    const searchTerm = e.target.value;
-    setSearchTerm(searchTerm);
-
-    setDropdownVisible(searchTerm.length > 0);
-
-    // Predictive selection
-    const matchingCity = filteredCities.find(
-      (city) => city.name.toLowerCase() === searchTerm.toLowerCase()
-    );
-
-    if (matchingCity) {
-      setSelectedCity(matchingCity.name);
-      addRegion();
-      setDropdownVisible(false);
-    }
-  };
-
-  const selectCity = (cityName) => {
-    setSelectedCity(cityName);
-    addRegion();
-    setDropdownVisible(false);
-  };
-
-  const clearInput = () => {
-    setSearchTerm("");
-    setSelectedCity("");
-    setDropdownVisible(false);
+    localStorage.removeItem("highlightedCity"); // Clear highlightedCity when removing a region
   };
 
   return (
@@ -122,22 +142,31 @@ const WorldTimeContainer = () => {
             placeholder="Search cities..."
             value={searchTerm}
             onChange={handleSearchChange}
-            onFocus={() => setDropdownVisible(true)} // Show dropdown on focus
+            onFocus={() => setDropdownVisible(true)}
+            onBlur={() => setTimeout(() => setDropdownVisible(false), 200)}
+            onKeyDown={handleKeyDown}
           />
           {searchTerm && (
-            <button className="clear-btn" onClick={clearInput}>
+            <button className="clear-btn" onClick={() => setSearchTerm("")}>
               ×
             </button>
           )}
 
-          {/* Dropdown List (Replaces <select> element) */}
+          {/* Dropdown List */}
           {dropdownVisible && filteredCities.length > 0 && (
             <ul className="dropdown-list">
               {filteredCities.map((city, index) => (
                 <li
                   key={`${city.name}-${index}`}
-                  className="dropdown-item"
-                  onClick={() => selectCity(city.name)}>
+                  className={`dropdown-item ${
+                    highlightedIndex === index ? "highlighted" : ""
+                  }`}
+                  onClick={() => {
+                    localStorage.setItem("highlightedCity", city.name);
+                    addRegion();
+                    setDropdownVisible(false);
+                  }}
+                  onMouseEnter={() => setHighlightedIndex(index)}>
                   {city.name.toUpperCase()}
                 </li>
               ))}
@@ -146,11 +175,8 @@ const WorldTimeContainer = () => {
         </div>
 
         <div className="button-group">
-          <button className="add-btn" onClick={addRegion}>
-            +
-          </button>
           <button className="reset-btn" onClick={resetLocalStorage}>
-            RESET
+            ⟳
           </button>
         </div>
       </div>
